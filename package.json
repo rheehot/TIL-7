@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "vuepress": "^1.2.0"
+  },
+  "name": "TIL",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "docs:dev": "vuepress dev",
+    "docs:build": "vuepress build"
+  }
+}
