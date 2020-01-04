@@ -5,8 +5,17 @@ module.exports = {
         nav: [
             { text: 'Home', link: '/' },
             { text: 'About', link: '/about/' },
-            { text: 'Foo', link: '/foo' }
-        ]
+            {
+                text: 'Development',
+                items: [
+                    { text: 'React', link: '/development/react/index'},
+                    { text: 'Vue', link: '/development/vue/makeVueBlog'}
+                ]
+            }
+        ],
+        sidebar: {
+        },
+
     },
     base: '/TIL/'
-}
+};
