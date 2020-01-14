@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 git add .
-git commit -m "$1"
+git commit -m "$*"
 git push origin master
 
 # abort on errors
@@ -18,7 +18,7 @@ cd .vuepress/dist
 
 git init
 git add -A
-git commit -m 'deploy'
+git commit -m "$*"
 
 # if you are deploying to https://<USERNAME>.github.io
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master

@@ -13,8 +13,7 @@ module.exports = {
                 ]
             }
         ],
-        sidebar: {
-        },
+        sidebar: 'auto'
 
     },
     base: '/TIL/'
