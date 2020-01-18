@@ -1,6 +1,11 @@
 module.exports = {
     title: "EYABC",
     description: "Today I Learned",
+    markdown: {
+        extendMarkdown: md => {
+            md.use(require('markdown-it-plantuml'))
+        }
+    },
     themeConfig: {
         nav: [
             { text: 'Home', link: '/' },

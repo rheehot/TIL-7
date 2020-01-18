@@ -10,5 +10,8 @@
     "docs:dev": "vuepress dev",
     "docs:build": "vuepress build",
     "docs:deploy": "sh deploy.sh"
+  },
+  "dependencies": {
+    "markdown-it-plantuml": "^1.4.1"
   }
 }
