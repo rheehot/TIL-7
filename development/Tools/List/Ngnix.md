@@ -27,9 +27,6 @@ var app = express();
 app.use(cors());
 ```
 
-
-
-
 * 클라이언트 도메인을 localhost:port 가 아닌 
 새로이 만들어 회피한다..
 예를들어 test.textory.io 의 프론트 도메인으로 접속을 하면
@@ -42,6 +39,12 @@ $ nginx -s reload
 ```
 
 ## ngnix.conf
+* 인증서를 발급받는다.(raks) 
+* ngix.conf 파일을 받는다. (raks)
+    * /Users/"computerName"/...
+        * computerName 부분을 수정한다. 
+
+
 
 Reference
 --

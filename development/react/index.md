@@ -12,3 +12,4 @@ sidebar
 
 # ETC
 * [Restrict Router](./etc/RestrictRouter.html)
+* [locale 언어](etc/locale.md)

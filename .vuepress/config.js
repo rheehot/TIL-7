@@ -15,7 +15,8 @@ module.exports = {
                 items: [
                     { text: 'React', link: '/development/react/index'},
                     { text: 'Vue', link: '/development/vue/makeVueBlog'},
-                    { text: 'Tools', link: '/development/Tools/index'}
+                    { text: 'Tools', link: '/development/Tools/index'},
+                    { text: 'Style', link: '/development/Style/index'}
                 ]
             }
         ],

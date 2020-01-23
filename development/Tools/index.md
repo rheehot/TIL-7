@@ -22,3 +22,5 @@ sidebar
 * [인증서 mkcert](./List/Mkcert)
 * [POSTMAN](./List/Postman)
 * [api-docs spec document](./List/Api_Document)
+* [Mac Terminal Command](./List/Mac Terminal Command.html)
+* [메신저 서비스들의 메시지 관리방식](./List/ChattingService.md)

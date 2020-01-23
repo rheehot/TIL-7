@@ -1,5 +1,6 @@
 #git
 * reactapp, backend, service  3가지 저장소를 pull 해온다.
+    * 다운로드 위치는 사용자>homeDirectory>textory 에 모두 위치하도록 한다. 
 * yann install / npm i / ./migrite ... 명령어를 실행하여 패키지를 다운로드 한다.
 
 ## 2020.01 주 브랜치
@@ -25,6 +26,8 @@ $ npm install
 * Django server
 
 ## cycle
+항상 source Tree를 확인하고 주 브랜치에서 pull 해오기!
+
 1. 브랜치: 메인 브랜치
 * 원격저장소의 main branch에서 로컬저장소의 main branch에 변경된 data를 가져온다.
 ```shell script

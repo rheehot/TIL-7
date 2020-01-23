@@ -1,12 +1,4 @@
-Environment
+개발환경 
 --
-@startuml
 
-:nginx: -left-> (Web) 
-:nginx: -left-> (App)
-(pos)
-(electron)  
-usecase UC3
-usecase (Last\nusecase) as UC4
-
-@enduml
+![diagram](../images/development_environment_1.png)
