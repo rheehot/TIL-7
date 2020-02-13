@@ -13,3 +13,5 @@ sidebar
 # ETC
 * [Restrict Router](./etc/RestrictRouter.html)
 * [locale 언어](etc/locale.md)
+* [Dotenv](./etc/Dotenv.md)
+* [function component와 class component](./etc/FunctionClassComponent.md)
