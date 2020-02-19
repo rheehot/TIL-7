@@ -224,10 +224,170 @@ function parseBetterJSAlternative(code) {
   const statements = code.split(' ');
   const tokens = [];
   REGEXES.forEach(REGEX => {
-      
+      // lex...
+  });
+  const ast = [];
+  tokens.forEach(token => {
+    // lex...
+  });
+  ast.forEach(node => {
+    // parse...
   })
 }
 ```
+good case
+```javascript
+function tokenize(code) {
+  const REGEXES = [
+    // ...
+  ]; 
+  const statements = code.split(' ');
+  const tokens = [];
+  REGEXES.forEach(REGEX => {
+    statements.forEach(statement => {
+      tokens.push(/* ... */);
+    })
+  })
+  return tokens; 
+}
+
+function lexer(tokens) {
+  const ast = [];
+  tokens.forEach(token => {
+  	ast.push(/* */);
+  });
+  return ast;
+}
+function parseBetterJSAlternative(code) {
+  const tokens = tokenize(code);
+  const ast = lexer(tokens);
+  ast.forEach(node => {
+    // parse...
+  });
+}
+```
+
+## 중복된 코드 작성 피하기
+중복된 코드가 있다는것은 어떤 로직을 수정해야 할 일이 생겼을 때, 수정해야 할 곳이 한 곳 이상이라는 뜻이다.
+사소한 차이점 때문에 중복된 코드를 작성하는 코드가 있다. 
+중복된 코드를 제거한다는 것은 하나의 함수/모듈/클래스를 사용하여 사소한 차이점을 처리할 수 있도록 추상화를 만드는 것을 의미한다.
+
+잘 추상화 하지 못한 코드는 중복된 코드보다 나쁠 수 있으므로 여러 원칙들을 따르는 것이 좋다. 
+ 
+bad case
+```javascript
+function showDeveloperList(developers) {
+  developers.forEach(developer => {
+    const expectedSalary = developer.calculateExpectedSalary();
+    const experience = developer.getExperience();
+    const githubLink = developer.getGithubLink();
+    const data = {
+      expectedSalary,
+      experience,
+      githubLink
+    };
+    render(data);
+  });
+}
+function showManagerList(managers) {
+  managers.forEach(manager => {
+    const expectedSalary = manager.calculateExpectedSalary();
+    const experience = manager.getExperience();
+    const portfolio = manager.getMBAProjects();
+    const data = {
+      expectedSalary,
+      experience,
+      portfolio
+   };  
+   render(data);
+  });
+}
+```
+
+good case
+```javascript
+function showEmployeeList(employees) {
+  employees.forEach((employee) => {
+    const expectedSalary = employee.calcaulateExpectedSalary();
+    const experience = employee.getExperience();
+    
+    let portfolio = employee.getGithubLink();
+    if(employee.type == 'manager') {
+      portfolio = employee.getMBAProjects();
+    }
+  
+    const data = {
+      expectedSalary,
+      experience,
+      portfolio
+    };      
+    render(data);
+  });
+}
+```
+
+## Object.assign 을 사용해 기본 객체 만들기
+bad case
+```javascript
+const menuConfig = {
+  title: null,
+  body: 'Bar',
+  buttonText: null,
+  cancellable: true
+};
+function createMenu(config) {
+  config.title = config.title || 'Foo';
+  config.body = config.body || 'Bar';
+  config.buttonText = config.buttonText || 'Baz',
+  config.cancellable = config.cancellable === undefined ? config.cancellable : true;
+}
+createMenu(menuConfig);
+```
+good case
+```javascript
+const menuConfig = {
+  title: 'Order',
+  // 유저가 'body' key 의 value 를 정하지 않았다.
+  buttonText: 'send',
+  cancellable: true
+};
+function createMenu(config) {
+  config = Object.assign({
+    title: 'Foo',
+    body: 'Bar',
+    buttonText: 'Baz',
+    cancellable: true  
+  }, config);
+  // config 는 { title: 'Order', body: 'Bar', buttonText: 'Send', cancellable: true } 
+}
+createMenu(menuConfig);
+```
+* [Object.assign()](./ObjectAssing.md) 
+
+## 매개변수로 플래그 사용하지 않기
+플래그를 사용하는 것 자체가 그 함수가 한가지 이상의 역할을 하고 있다는 것을 뜻한다.
+boolean 기반으로 함수가 실행되는 코드가 나뉜다면 함수를 분리하자.
+
+bad case
+```javascript
+function createFile(name, temp) {
+  if (temp) {
+    fs.create(`./temp/${name}`);
+  } else {
+    fs.create(name);
+  }
+}
+```
+good case
+```javascript
+function createFile(name) {
+  fs.create(name);
+}
+function createTempFile(name) {
+  createFile(`./temp/${name}`);
+}
+```
+
 
 Reference
 --
