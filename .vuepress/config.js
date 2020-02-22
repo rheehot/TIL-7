@@ -22,7 +22,8 @@ module.exports = {
                 ]
             }
         ],
-        sidebar: 'auto'
+        sidebar: 'auto',
+        smoothScroll: true
 
     },
     base: '/TIL/'

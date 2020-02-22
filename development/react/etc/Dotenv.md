@@ -1,6 +1,6 @@
 Dotenv
 --
-* [zero-dependency module](../../Term/List/ZeroDependencyModule.md)
+* [zero-dependency module](../../Term/ZeroDependencyModule.md)
 * 환경 변수(environment variables)를 .env 파일 내부의 process.env로 로드합니다.
 * 코드와 별도로 환경에 구성을 저장하는 것은 The Twelve-Factor App 방법론을 기반으로합니다.
 

@@ -4,7 +4,7 @@
 * 지침일 뿐이다
 
 # 변수 (Variables)
-1. 의미 있고 발음하기 쉬운 변수 이름 사용
+## 의미 있고 발음하기 쉬운 변수 이름 사용
 
     bad case
     ```javascript
@@ -15,7 +15,7 @@
     const currentDate = moment.format('YYYY/MM/DD');
     ```
 
-1. 동일한 유형의 변수에 동일한 어휘 사용
+## 동일한 유형의 변수에 동일한 어휘 사용
 
     bad case
     ```javascript
@@ -28,7 +28,7 @@
     getUser();
     ```
    
-1. 검색가능한 이름 사용
+## 검색가능한 이름 사용
     
     작성할 코드보다 읽을 코드가 더 많기 때문에, 코드를 읽기 쉽고 검색 가능하게 작성해야 한다.
     buddy.js, ESLint 같은 도구들이 이름이 정해져있지 않은 상수들을 발견하고 고칠수 있게 해준다.
@@ -43,7 +43,7 @@
     setTimeout(blastOff, MILLISECONDS_IN_A_DAY);
     ```
 
-1. 의도를 나타내는 변수들을 사용
+## 의도를 나타내는 변수들을 사용
 
     bad case
     ```javascript
@@ -59,7 +59,7 @@
     saveCityZipCode(city, zipCode);
     ```
 
-1. 자신만 알아볼 수 있는 작명 피하기
+## 자신만 알아볼 수 있는 작명 피하기
 
     명시적인 것이 암시적인 것보다 좋다
     
@@ -86,7 +86,7 @@
     });
     ```
 
-1. 문맥상 필요없는 것들 쓰지 않기
+## 문맥상 필요없는 것들 쓰지 않기
     
     bad case
     ```javascript
@@ -111,7 +111,7 @@
     }
     ```
 
-1. 기본 매개변수가 short circuiting 트릭이나 조건문 보다 깔끔하다.
+## 기본 매개변수가 short circuiting 트릭이나 조건문 보다 깔끔하다.
 
     기본 매개변수는 종종 short circuiting 트릭보다 깔끔하다.
     기본 매개변수는 매개변수가 undefined 일 때만 적용됩니다.
@@ -475,7 +475,7 @@ class SuperArray extends Array {
 }
 ```
 
-## [명령형 프로그래밍보다 함수형 프로그래밍을 지향하자](../../Term/List/JavascriptFunctionalProgramming.md)
+## [명령형 프로그래밍보다 함수형 프로그래밍을 지향하자](../Term/JavascriptFunctionalProgramming.md)
 함수형 언어는 더 깔끔하고 테스트하기 쉽다.
 
 bad case

@@ -1,0 +1,1 @@
+Layout.vue 가 기본 component 가 되고, 404.vue 는 404 page 에 대한 component가 됨.
