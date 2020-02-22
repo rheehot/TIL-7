@@ -388,6 +388,232 @@ function createTempFile(name) {
 }
 ```
 
+## 사이드 이펙트를 피하기 1
+함수는 값을 받아서 어떤일을 하거나 사이드 이펙트를 만들어 낸다.
+* 파일에 쓰여질 때
+* 전역 변수 수정
+* 실수로 모은 돈을 다른사람에게 보낼 때...
+
+* 파일 작성할 때
+    * 파일을 작성하는 함수나 틀래스가 여러개 존재하면 안되며 반드시 하나만 있어야 한다. 
+
+* 사이드 이펙트 예
+    * 어떠한 구조체도 없이 객체 사이의 상태를 공유하는 행위
+    * 무엇이든 쓸 수 있는 변경가능한 데이터 유형을 사용하는 행위
+  
+bad case:
+```javascript
+// 아래 함수에 의해 참조되는 전역 변수이다.
+// 이 전역변수를 사용하는 또 하나의 함수가 있다고 생각해보자. 이제 이 변수는 배열이 될 것이고 프로그램을 망가뜨린다.
+let name = 'Ryan McDermott';
+
+function splitInfoFirstAndLastName() {
+  name = name.split(' ');
+}
+splitInfoFirstAndLastName();
+```
+good case
+```javascript
+function splitInfoFirstAndLastName(name) {
+  return name.split(' ');
+}
+const name = 'Ryan McDermott';
+const newName = splitInfoFirstAndLastName(name);
+```
+
+## 사이드 이펙트 피하기 2
+자바스트립트에서 기본타입 자료형은 값을 전달하고 객체와 배열을 참조를 전달한다.
+
+우리가 만든함수는 장바구니 배열에 변화를 주며 이 변화는 구매목록에 어떤 상품을 추가하는 기능을 한다. 
+장바구니 배열을 사용하는 어느 다른 함수가 있다면 이러한 추가에 영향을 받습니다. 
+
+* bad case
+    * 유저가 구매 함수를 호출한다.
+    * 네트워크를 요청하고 서버에 장바구니 배열을 보낸다.
+    * 네트워크 연결이 좋지 않아 구매함수는 다시한번 네트워크 요청을 보내야 하는 상황이 생겼다. 
+    * 사용자가 네트워크 요청이 시작되기 전에 실수로 원하지 않는 상품의 장바구니에 추가 버튼을 실수로 클릭하였다. 
+    * 실수가 있고난 뒤 네트워크 요청이 시작되면 장바구니에 추가 함수 때문에 실수로 변경된 장바구니 배열을 서버에 보내게 된다. 
+    ```javascript
+    const addItemToCart = (cart, item) => {
+      cart.push({ item, date: Date.new() });
+    };
+    ```
+    
+* good cade
+    *  장바구니에 추가 함수는 항상 장바구니 배열을 복제하여 수정하고 복제본을 반환하는 것이다. 
+    장바구니 참조를 보유하고 있는 다른 함수가 다른 변경 사항의 영향을 받지 않게 된다.
+    * 실제로 입력된 객체를 수정하고 싶은 경우가 있을 수 있지만 이 예제를 생각하면 그런 경우는 거의 없다. 그리고 대부분의 것들이 사이드 이펙트 없이 리팩토링 될 수 있다.
+    * 큰 객체를 복제하는 것은 성능 측면에서 값이 매우 이러한 프로그래밍 접근법을 가능하게 해 줄 좋은 [라이브러리](https://immutable-js.github.io/immutable-js/)가 존재한다.
+    이는 객체와 배열을 수동으로 복제하는 것처럼 메모리 집약적이지 않게 해주고 빠르게 복제해준다.
+    ```javascript
+    const addItemToCart = (cart, item) => {
+      return [...cart, { item, date: Date.now() }];
+    }
+    ```
+
+## 전역 함수 피하기
+전역 환경을 사용하는 것은 JavaScript 에서 나쁜 관행이다.
+* 다른 라이브러리들과의 충돌이 있을 수 있다.
+* diff 메서드를 Array.prototype 에서 쓰면 다른 라이브러리와 충돌 할 수 있다. 
+ES6 의 classes를 사용해서 전역 Array 를 상속하자.
+
+bad case
+```javascript
+Array.prototype.diff = function diff(comparisonArray) {
+  const hash = new Set(comparisonArray);
+  return this.filter(elem => !hash.has(elem));
+}
+```
+
+good case:
+```javascript
+class SuperArray extends Array {
+  diff(comparisionArray) {
+    const hash = new Set(comparisionArray);
+    return this.filter(elem => !hash.has(elem));
+  }
+}
+```
+
+## [명령형 프로그래밍보다 함수형 프로그래밍을 지향하자](../../Term/List/JavascriptFunctionalProgramming.md)
+함수형 언어는 더 깔끔하고 테스트하기 쉽다.
+
+bad case
+```javascript
+const programmerOutput = [
+  {
+    name: 'Uncle Bobby',
+    linesOfCode: 500
+  }, 
+  {
+    name: 'Suzie Q',
+    linesOfCode: 1500
+  },
+  {
+    name: 'Jimmy Gosling',
+    linesOfCode: 150
+  }, 
+  {
+    name: 'Gracie Hopper',
+    linesOfCode: 1000
+  },
+];
+
+let totalOutput = 0;
+for (let i = 0; i < programmerOutput.length; i++) {
+  totalOutput += programmerOutput[i].linesOfCode;
+}
+```
+good case
+```javascript
+const programmerOutput = [
+  {
+    name: 'Uncle Bobby',
+    linesOfCode: 500
+  }, 
+  {
+    name: 'Suzie Q',
+    linesOfCode: 1500
+  },
+  {
+    name: 'Jimmy Gosling',
+    linesOfCode: 150
+  }, 
+  {
+    name: 'Gracie Hopper',
+    linesOfCode: 1000
+  },
+];
+const totalOutput = programmerOutput
+.map(programmer => programmer.linesOfCode)
+.reduce((acc, linesOfCode) => acc + linesOfCode, INITIAL_VALUE);
+```
+
+## 조건문 캡슐화 하
+bad case
+```javascript
+if (fsm.state === 'fetching' && isEmpty(listNode)) {
+  // ...
+}
+```
+good case
+```javascript
+function shouldShowSpinner(fsm, listNode) {
+  return fsm.state === 'fetching' && isEmpty(listNode);
+}
+if (shouldShowSpinner(fsmInstance, listNodeInstance)) {
+  // ...
+}
+```
+
+## 부정조건문 사용하지 않기
+bad case
+```javascript
+function isDOMNodeNotPresent(node) {
+  // ...
+}
+if (!isDOMNodeNotPresent(node)) {
+  // ...
+}
+``` 
+good case
+```javascript
+function isDOMNodePresnet(node) {
+   // ...
+}
+if (isDOMNodePresnet(node)) {
+  // ...
+}
+```
+
+## 조건문 작성 피하기
+if 문 대신 다형성을 이용하면 가능하다. 
+clean code 컨셉은 함수는 단 하나의 일만 수행한다 이다. 함수나 클래스에 if 문을 쓴다면
+함수나 클래스가 한가지 이상의 일을 수행하고 있다는 것과 같다.
+
+bad case
+```javascript
+class Airplane {
+   // ...
+  getCruisingAltitude() {
+    switch (this.type) {
+      case '777':
+        return this.getMaxAltitude() - this.getPassengerCount();
+      case 'Airt Force One':
+        return this.getMaxAltitude();
+      case 'Cessna': 
+        return this.getMaxAltitude() - this.getFuelExpenditure();
+    }
+  }
+}
+```
+good case
+```javascript
+class Airplane {
+  // ...
+}
+class Boeing777 extends Airplane {
+  // ...
+  getCruisingAltitude() {
+    return this.getMaxAltitude() - this.getPassengerCount();
+  }
+}
+class AirForceOne extends Airplane {
+  // ...
+  getCruisingAltitude() {
+    return this.getMaxAltitude ();
+  }
+}
+class Cessna etends Airplane {
+  // ...
+  getCruisingAltitude () {
+    return this.getMaxAltitude() - this.getFuelExpenditure();
+  }
+}
+```
+
+## 타입-체킹 피하기 1
+
 
 Reference
 --
