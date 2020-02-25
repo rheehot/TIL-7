@@ -72,3 +72,8 @@ Tools
 * [api-docs spec document](/development/Tools/Api_Document)
 * [Mac Terminal Command](/development/Tools/MacTerminalCommand.md)
 * [메신저 서비스들의 메시지 관리방식](/development/Tools/ChattingService.md)
+
+
+Design Patterns
+--
+* [상속과 조합](/development/DesignPattern/CompositionAndInheritance.md)

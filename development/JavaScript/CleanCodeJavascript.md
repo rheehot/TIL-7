@@ -4,6 +4,7 @@
 * 지침일 뿐이다
 
 # 변수 (Variables)
+
 ## 의미 있고 발음하기 쉬운 변수 이름 사용
 
     bad case
@@ -612,9 +613,308 @@ class Cessna etends Airplane {
 }
 ```
 
-## 타입-체킹 피하기 1
+## 타입-체킹 피하기 1 일관성 있는 API 사용하기
+JavaScript는 타입이 정해져 있지 않은 자유로움 때문에 발생하는 버그에 타입-체킹 이외에 피할 수 있는 많은 방법들이 존재한다.
+bad case:
+```javascript
+function travelToTexas(vehicle) {
+  if (vehicle instanceof  Bicycle) {
+    vehicle.pedal(this.currentLocation, new Location('texas'));
+  } else if (vehicle instanceof Car) {
+    vehicle.drive(this.currentLocation, new Location('texas'));
+  }
+}
+```
+good case:
+```javascript
+function travelToTexas(vehicle) {
+  vehicle.move(this.currentLocation, new Location('texas'));
+}
+```
 
+## 타입-체킹 피하기 2 TypeScript 도입
+bad case:
+```javascript
+function combine(val1, val2) {
+  if (typeof val1 === 'number' && typeof val2 === 'number'||
+      typeof val1 === 'string' && typeof val2 === 'string') {
+	return val1 + val2;
+  }
+  throw new Error('Must be of type String or Number');
+}
+```
+good case:
+```javascript
+function combine(val1, val2) {
+  return val1 + val2;
+}
+```
 
+## 죽은 코드 지우기
+죽은 코드는 중복된 코드 만큼이나 좋지 않다.
+호출되지 않는 코드는 지우자. 그 코드가 여전히 필요해도 그 코드는 버전 히스토리에 안전하게 남아있을 것이다.
+
+bad case
+```javascript
+function oldRequestModule(url) {
+  // ...
+}
+function newRequestModule(url) {
+  // ...
+}
+const req = newRequestModule;
+inventoryTracker('apples', req, 'www.inventory-awesome.io');
+```
+good case
+```javascript
+function newRequestModule(url) {
+  // ...
+}
+const req = newRequestModule;
+inventoryTracker('apples', req, 'www.inventory-awesome.io');
+```
+
+# 객체와 자료구조 (Objects and Data Structures)
+
+## getter와 setter를 사용하세요.
+JavaScript는 public private 같은 키워드가 없다.
+그래서 getter setter를 사용하여 객체의 데이터에 접근하는 것이 객체의 속성을 찾는 것보다 훨씬 낫다. 
+
+* 객체의 속성을 얻는 것 이상의 많은 것을 하고싶을 때, 코드에서 모든 접근자를 찾아 바꾸고 할 필요가 있다.
+* set 할 때 검증로직을 추가하는 것이 코드를 더 간단하게 만든다. 
+* 내부용 API 를 캡슐화 할 수 있다.
+* getting 과 setting 할 때 로그를 찾거나 에러처리를 하기 쉽다.
+* 클래스를 상속해서 디폴트 동작을 재정의할 수 있다.
+* 서버에서 객체 속성을 받아올 때 lazy load 할 수 있다.
+
+bad case:
+```javascript
+class BackAccount {
+  constructor () {
+    this.balance = 1000;
+  }
+}
+const backAccount = new BacnkAccount();
+backAccount.balance -= 100;
+```  
+
+good case
+```javascript
+class BackAccount {
+  constructor(balance = 1000) {
+    this._balance = balance;
+  }
+  // getter/setter를 정의할 때 'get', 'set' 같은 접두사가 필요하지 않다. 
+  set balance(amount) {
+    if (this.verifyIfAmountCanBeSetted(amount)) {
+      this._balance = amount;
+    } 
+  }
+  get balance () {
+    return this._balance;
+  } 
+  verifyIfAmountCanBeSetted(val) {
+  // ... 
+  }
+}
+```
+
+## 객체에 비공개 멤버를 만드세요
+클로져를 이용하면 가능하다
+
+bad case
+```javascript
+const Employee = function(name) {
+  this.name = name;
+};
+Employee.prototype.getName = function getName() {
+  return this.name
+};
+const employee = new Employee('John Doe');
+console.log(`Employee name: ${employee.getName()}`); // John Doe
+delete employee.name;
+console.log(`Employee name: ${employee.getName()}`); // undefined
+```
+
+# 클래스 Classes
+
+## ES5 의 함수보다 ES6의 클래스 사용하기
+ES5의 클래스에서 상속, 메소드 정의 가 어려웠다. 상속이 필요한 경우라면 클래스를 사용하는 것이 좋다. 
+크고 더 복잡한 객체가 필요한 경우가 아니라면 클래스보다 작은 함수를 사용하자.
+
+bad case
+```javascript
+const Animal = function(age) {
+  if (!(this instanceof Animal)) {
+    throw new Error('Instantiate Animal with `new`');
+  }
+  this.age = age;
+};
+Animal.prototype.move = function() {}
+
+const Mammal = function(age, furColor) {
+  if(!(this instanceof Mammal)) {
+    throw new Error('Instantiate Mammal with `new`');
+  }
+  Animal.call(this. age);
+  this.furColor = furColor;
+};
+
+Mammal.prototype = Object.create(Animal.prototype);
+Mammal.prototype.constructor = Mammal;
+Mammal.prototype.liveBirth = function liveBirth() {};
+
+const Human = function(age, furColor, languageSpoken) {
+  if (!(this instanceof Human)) {
+    throw new Error('Instantiate Human with `new`');
+  }
+  Mammal.call(this, age, furColor);
+  this.languageSpoke =languageSpoken;
+};
+Human.prototype = Object.create(Mammal.prototype);
+Human.prototype.constructor = Human;
+Human.prototype.speak = function speak() {};
+```
+
+good case
+```javascript
+class Animal {
+  constructor(age) {
+    this.age = age;
+  }
+  move() { /* .. */ }
+}
+class Mammal extends Animal {
+  constructor(age, furColor) {
+    super(age);
+    this.furColor = furColor;
+  }
+  liveBirth() { /* .. */ }
+}
+class Human extends Mammal {
+  constructor(age, furColor, languageSpoken) {
+    super();
+    this.languageSpoken = languageSpoken;
+  }
+  speak() { /* ... */ }
+}
+```
+
+## 메소드 체이닝 사용하기
+JavaScript 에서 Method Chaining 은 jQuery Lodash 등 많은 라이브러리에서도 사용하는 유용한 패턴이다.
+코드를 간결하고 이해하기 쉽게 해준다. 클래스 함수에서 단순히 모든 함수의 끝에 this 를 리턴해주는 것으로 클래스 메소드를 추가로 연결할 수 있다.
+
+bad case
+```javascript
+class Car {
+  constructor() {
+    this.make = 'Honda';
+    this.model = 'Accord';
+    this.color = 'white';
+  }
+  setMake(make) {
+    this.make = make;
+  }
+  setModel(model) {
+    this.model = model;
+  }
+  setColor(color) {
+    this.color = color;
+  }
+  save() {
+    console.log(this.make, this.model, this.color);
+  }
+}
+
+const car = new Car();
+car.setColor('pink');
+car.setMake('Ford');
+car.setModel('F-150');
+car.save();
+```
+
+good case: 
+```javascript
+class Car {
+  constructor() {
+    this.make = 'Honda';
+    this.model = 'Accord';
+    this.color = 'white';
+  }
+  setMake(make) {
+    this.make = make;
+    return this;
+  }
+  setModel(model) {
+    this.model = model;
+    return this;
+  } 
+  setColor(color) {
+    this.color = color;
+    return this;
+  }
+  save () {
+    console.log(this.make, this.model, this.color);
+    return this;
+  }
+}
+const car = new Car()
+    .setColor('pink')
+    .setMake('Ford')
+    .setModel('F-150')
+    .save();
+```
+
+## 상속보단 조합(composition)을 사용하세요
+상속 보다 조합을 사용했을 때 이득이 더 많다. 
+
+상속을 쓰는 좋은 예시
+1. 상속관계가 has-a 관계가 아니라 is a 일 때 (사람 -> 동물 vs 유저 -> 유저정보)
+1. 기반 클래스의 코드를 다시 사용할 수 있을 때 (인간은 모든 동물처럼 움직일 수 있다.)
+1. 기반 클래스를 수정하여 파생된 클래스 모두를 수정하고 싶을 때 (이동시 모든 동물이 소비하는 칼로리를 변경하고 싶을 때)
+
+bad case
+```javascript
+class Employee {
+  constructor(name, email) {
+    this.name = name;
+    this.email = email;
+  };
+  // ...
+}
+// Employees 가  tex data 를 "가지고" 있기 때문에 좋지 않다.
+// EmployeeTaxData 는 Employee 타입이 아니다.
+class EmployeeTexData extends Employee {
+  constructor(ssn, salary ) {
+    super();
+    this.ssn = ssn;
+    this.salary = salary;
+  };
+  // ...
+}
+```
+
+good case
+```javascript
+class EmployeeTaxData {
+  contructor(ssn, salary) {
+    this.ssn = ssn;
+    this.salary = salary;
+  }
+  // ...
+}
+
+class Employee {
+  contructor(name, email) {
+    this.name = name;
+    this.email = email;
+  }
+  setTaxData(ssn, salary) {
+    this.textData = new EmployeeTaxData(ssn, salary);
+  }
+  // ...
+}
+```
 Reference
 --
 * clean-code-javascript https://github.com/qkraudghgh/clean-code-javascript-ko/blob/master/README.md
