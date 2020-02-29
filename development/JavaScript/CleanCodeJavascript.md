@@ -915,6 +915,218 @@ class Employee {
   // ...
 }
 ```
+
+# SOLID
+
+## 단일 책임 원칙 (Single Responsibility Principle, SRP)
+하나의 클래스에 너무 많은 기능들이 있고 
+이 작은 기능들을 수정할 때 이 코드가 다른 모듈들에 어떠한 영향을 끼치는지 이해하기 어려울 수 있다.
+
+bad case:
+```javascript
+class UserSettings {
+  constructor(user) {
+    this.user = user;
+  }
+  changeSettings(settings) {
+    if (this.verifyCredentials()) {
+      // ...
+    }
+  }
+  verifyCredentials() {
+    //...
+  }
+}
+```
+
+good case:
+```javascript
+class UserAuth {
+  constructor(user) {
+    this.user = user;
+  }
+  verifyCredentilas() {
+    // ...
+  }
+}
+class UserSettings {
+  constructor(user) {
+    if (this.auth.verifyCredentials()) {
+    
+    }
+  }
+}
+```
+
+## 개방/폐쇄 원칙 (Open/Closed Priciple, OCP)
+소프트웨어 개체(클래스, 모듈, 함수 등)는 확장을 위해 개방적이어야 하며 수정시엔 폐쇄적이어야 한다.
+사용자가 .js 소스 코드 파일을 열어 수동으로 조작하지 않고도 모듈의 기능을 확장하도록 허용해야 한다.
+
+bad case:
+```javascript
+class AjaxAdapter extends Adapter {
+  constructor() {
+    super();
+    this.name = 'ajaxAdapter';
+  }
+}
+
+class NodeAdapter extends Adapter {
+  constructor() {
+    super();
+    this.name = 'nodeAdapter'
+  }
+}
+
+class HttpRequester {
+  constructor(adapter) {
+    this.adapter = adapter;
+  }
+  fetch(url) {
+    if (this.adapter.name === 'ajaxAdapter') {
+      return makeAjaxCall(url).then((response) => {
+        // transform response and retur
+      })
+    } else if (this.adapter.name === 'httpNodeAdapter') {
+      return makeHttpCall(url).then((response) => {
+        // transform response and return 
+      })
+    }
+  }
+}
+
+function makeAjaxCall(url) {
+  // request and return promise
+}
+function makeHttpCall(url) {
+  // request and return promise
+}
+```
+
+good case:
+```javascript
+class AjaxAdapter extends Adapter {
+  constructor() {
+    super();
+    this.name = 'ajaxAdapter';
+  }
+  request(url) {
+    // request and return promise
+  }
+}
+class NodeAdapter extends Adapter { 
+  constructor() {
+    super();
+    this.name = 'nodeAdapter';
+  }
+  request(url) {
+    // request and return promise
+  }
+}
+class HttpRequester {
+  constructor(adapter) {
+    this.adapter = adapter;
+  }
+  fetch(url) {
+    return this.adapter.request(url).then((response) => {
+    	// transform response and return 
+    });
+  }
+}
+```
+
+## 리스코프 치환 원칙 (Liskov Subsititution Priciple, LSP)
+* 매우 간단하지만 강력한 원칙. 
+* 자료형 S가 자료형 T의 하위형이면, 프로그램이 갖추어야 할 속성들(정확성, 수행되는 작업 등)의 변경사항 없이, 자료형 T의 객체를 자료형 S의 
+객체로 치환할 수 있어야 한다는 원칙이다.
+
+부모 클래스와 자식클래스를 가지고 있을 때 베이스 클래스와 하위 클래스를 잘못된 결과 없이 서로 교환하여 사용할 수 있다. 
+
+정사각형은 직사각형이지만 상속을 통해 is-a 관계를 사용하여 모델링 한다면 문제가 발생한다.
+```javascript
+class Rectangle {
+  constructor() {
+  	this.width = 0;
+    this.height = 0;
+  }
+  setColor(color) {
+    // ...
+  }
+  render(area) {
+    // ...
+  }
+  setWidth(width) {
+    this.width = width;
+  }
+  setHeight(height) {
+    this.height = height;
+  }
+  getArea() {
+    return this.width * this.height;
+  }
+}
+class Square extends Rectangle {
+  setWidth(width) {
+    this.width = width;
+    this.height = width;
+  }
+  setHeight(height) {
+    this.width = height;
+    this.height = height;
+  }
+}
+function renderLargeRectangles(rectangles) {
+  rectangles.forEach((rectangle) => {
+    rectangle.setWidth(4);
+    rectangle.setHeight(5);
+    const area = rectangle.getArea(); // 정사각형일 때 25를 리턴합니다. 하지만 20이어야 하는게 맞다.  ??
+    rectangle.render(area);
+  })
+}
+const rectangles = [new Rectangle(), new Rectangle(), new Square()];
+renderLargeRectangles(rectangles);
+```
+
+good case
+```javascript
+class Shape {
+  setColor(color) {
+    // ...
+  }
+  render(area) {
+    // ...
+  }
+}
+class Rectangle extends Shape {
+  constructor(width, height) {
+    super();
+    this.width = width;
+    this.height = height;
+  }
+  getArea() {
+    return this.width & this.height;
+  }
+}
+class Square extends Shape {
+  constructor(length) {
+    super();
+    this.length = length;
+  }
+  getArea() {
+    return this.length * this.length;
+  }
+}
+function renderLargeShapres(shapes) {
+  shapes.forEach((shape) => {
+    const area = shape.getArea();
+    shape.render(area);
+  });
+}
+const shapes = [new Rectangle(4, 5), new Rectangle(4, 5), new Square(5)];
+renderLargeShapes(shapes);
+```
+
+
 Reference
 --
 * clean-code-javascript https://github.com/qkraudghgh/clean-code-javascript-ko/blob/master/README.md
