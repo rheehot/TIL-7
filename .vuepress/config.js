@@ -8,7 +8,8 @@ module.exports = {
     },
     themeConfig: {
         nav: [
-            { text: 'Home', link: '/' },
+            { text: 'Todo', link: '/Todo/' },
+            { text: 'List', link: '/' },
             { text: 'About', link: '/about/' },
             {
                 text: 'Development',

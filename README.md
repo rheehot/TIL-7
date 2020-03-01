@@ -60,7 +60,8 @@ Tools
 * vsCode
 * [mongoDB Robo 3T](/development/Tools/Robo3T.md)
 * keyNote
-* [git](/development/Tools/git.html) 
+* git
+    * [Git 사용 중 자주 만나는 이슈 정리](/development/Tools/Git/git.html)
 * [sequal pro](/development/Tools/SequalPro.md)
 * pycharm community
 * [Ngnix](/development/Tools/Ngnix.md)
