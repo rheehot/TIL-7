@@ -1126,6 +1126,494 @@ const shapes = [new Rectangle(4, 5), new Rectangle(4, 5), new Square(5)];
 renderLargeShapes(shapes);
 ```
 
+## 인터페이스 분리 원칙 (Interface Segregation Principle, ISP)
+클라이언트는 사용하지 않는 인터페이스에 의존하도록 강요 받으면 안된다.
+
+JavaScript 에 타입 시스템이 없다 하더라도 중요하고 관계가 있는 법칙이다. 
+가장 좋은 예는 방대한 양의 설정 객체가 필요한 클래스 이다. 
+대부분의 경우 설정들이 전부다 필요하지 않기 때문에 클라이언트가 방대한 양의 옵션을 설정하지 않는 것이 좋다. 
+설정을 선택적으로 할 수 있다면 무거운 인터페이스를 만드는 것을 방지할 수 있다.
+
+bad case
+```javascript
+class DOMTraverser {
+  constructor(settings) {
+    this.settings = settings;
+    this.setup();
+  }
+  setup() {
+    this.rootNode = this.settings.rootNode;
+    this.animationModule.setup();
+  }
+  traverse() {
+    // ...
+  }
+}
+const $ = new DOMTraverser({
+  rootNode: document.getElementsByTagName('body'),
+  animationModules() {} // 대부분 DOM 을 탐색할 때 애니메이션이 필요하지 않다.
+})
+```
+good case
+```javascript
+class DOMTraverser {
+  constructor(settings) {
+    this.settings = settings;
+    this.options = settings.options;
+    this.setup();
+  } 
+  setup() {
+    this.rootNode = this.settings.rootNode;
+    this.setupOptions();
+  }
+  setupOptions() {
+    if (this.options.animationModule) {
+      // ...  
+    }
+  }
+  traverse() {
+    // ...
+  }
+}
+const $ = new DOMTraverser({
+  rootNode: document.getElementsByTagName('body'),
+  options: {
+    animationModule() {}
+  }
+})
+```
+
+## 의존성 역전 원칙 (Dependency Inversion Principle, DIP)
+1. 상위 모듈은 하위 모듈에 종속되어서는 안된다. 둘 다 추상화에 의존해야 한다.
+2. 추상화는 세부사항에 의존하지 않습니다. 세부사항은 추상화에 의해 달라져야 한다.
+
+상위모듈이 하위 모듈의 세부사항을 알지 못하게 한다. 모듈간의 의존성을 감소시키는 데에 있다. 
+ 
+bad case
+```javascript
+class InventoryRequester {
+  constructor() {
+    this.REQ_METHODS = ['HTTP'];
+  }
+  requestItem(item) {
+    // ...
+  }
+}
+class InventoryTracker {
+  constructor(items) {
+    this.items = items;
+    // 안좋은 이유: 특정 요청방법 구현에 대한 의존성을 만들었다.
+    // requestItems 는 한가지 요청방법을 필요로 한다.
+    this.requester = new InventoryRequester();
+  }
+  requestItems() {
+    this.items.forEach(item => {
+      this.requester.requestItem(item);
+    })
+  }
+}
+const inventoryTracker = new InventoryTracker(['apples', 'bananas']);
+inventoryTracker.requestItems();
+```
+
+good case
+```javascript
+class InventoryTracker {
+  constructor(items, requester) {
+    this.items = items;
+    this.requester = requester;
+  }
+  requestItems() {
+    this.items.forEach(item => {
+      this.requester.requestItem(item);  
+    })
+  }
+}
+
+class InventoryRequesterV1 {
+  constructor() {
+    this.REQ_METHODS = ['HTTP'];
+  }
+  requestItem(item) {
+    // ...
+  }
+}
+
+class InventoryRequesterV2 {
+  constructor() {
+    this.REQ_METHODS = ['WS'];
+  }
+  requestItem(item) {
+    // ...
+  }
+}
+const inventoryTracker = new InventoryTracker(['apples', 'bananas'], new InventoryRequesterV2());
+inventoryTracker.requestItems();
+```
+
+# 테스트 Testing
+테스트는 배포보다 중요하다. 테스트 없이 배포한다는 것은 당신이 짜 놓은 코드가 언제든 오작동해도 이상하지 않다는 얘기와 같다.
+테스트에 얼마나 시간을 투자할 지는 팀에 달려있지만 Coverage 가 100% 라는 것은 개발자에게 높은 자신감과 안도감을 준다.
+훌륭한 테스트 도구를 보유해야 하는 것 뿐만 아니라 훌륭한 [Coverage 도구](http://gotwarlost.github.io/istanbul/)를 사용해야 한다는 것을 의미한다.
+
+테스트 코드를 작성하지 않다는 것은 그 무엇도 변명이 될 수 없다.
+[훌륭하고 많은 JavaScript 테스트 프레임워크](http://jstherightway.org/#testing-tools)들이 있다.
+새로운 기능/모듈 들을 짤 때 테스트 코드를 작성하자. 만약 테스트 주도 개발 방법론(Test Driven Development, TDD) 이 당신에게 맞는 방법이라면 훌륭한 개발 방법이 될 수 있다.
+
+bad case
+```javascript
+const assert = require('assert');
+
+describe('MakeMomentJSGreateAgain', () => {
+  it('handles date boundaries', () => {
+    let date;
+    date = new MakeMomentJSGreateAgain('1/1/2015');
+    date.addDays(30);
+    assert.equal('1/31/2015', date);
+  
+    date = new MakeMomentJSGreateAgain('2/1/2016');
+    date.addDays(28);
+    assert.equal('02/29/2016', date);
+ 
+    date = new MakeMomentJSGreateAgain('2/1/2015'); 
+    date.addDays(28);
+    assert.equal('03/01/2015', date);
+  })
+})
+```
+good case
+```javascript
+const assert = require('assert');
+describe('MakeMomentJSGreateAgain', () => {
+  it('handles 30-day months', () => {
+    const date = new MakeMomentJSGreateAgain('1/1/2015');
+    date.addDays(30);
+    assert.equal('1/3/2015', date);
+  });
+  it('handles leap year', () => {
+    const date = new MakeMomentJSGreateAgain('2/1/2016');
+    date.addDays(28);
+    assert.equal('02/29/2016', date);
+  });
+  it('handles non-leap year', () => {
+    const date = new MakeMomentJSGreateAgain('2/1/2015');
+    date.addDays(28);
+    assert.equal('03/01/2015', date);
+  });
+});
+```
+
+# 동시성 (Concurrency)
+
+## Callback 대신 Promise 를 사용하기
+bad case
+```javascript
+require('request').get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', (requestErr, response) => {
+  if (requestErr) {
+    console.error(requestErr);   
+  } else {
+    require('fs').writeFile('article.html', response.body, (writerErr) => {
+      if (writerErr) {
+      	console.error(writeErr);
+      } else {
+        console.log('File written');
+      }
+    })
+  }
+
+})
+```
+good case
+```javascript
+require('request-promise').get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin')
+.then((response) => {
+  return require('fs-promise').writeFile('article.html', response);
+})
+.then(() => {
+  console.log('File written');
+})
+.catch((err) => {
+  console.error(err);
+});
+```
+
+## Async/Await 는 Promise 보다 더욱 깔끔하다
+```javascript
+async function getCleanCodeArticle() {
+  try {
+    const response = await require('request-promise').get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin');
+    await require('fs-promise').writeFile('article.html', response);
+    console.log('File written)');
+  } catch (err) {
+    console.log(error(err));  
+  }
+}
+```
+
+# 에러 처리 Error Handling
+에러를 뱉는다는 것은 좋은 것이다.
+프로그램에서 무언가가 잘못되었을 때 런타임에서 성공적으로 확인되면 현재 스택에서 함수 실행을 중단하고 (노드에서) 
+프로세스를 종료하고 스택 추적으로 콘솔에서 사용자에게 그 이유를 알려준다.
+
+## 단순히 에러확인만 하지 말기
+console.log 를 통해 콘솔에 로그를 기록하는 것은 에러 로그를 잃어버리기 쉽기 때문에 좋은 방법이 아니다.
+try/catch 로 어떤 코드를 감쌌다면 그 코드에 에러가 날것을 대비한 것이므로 그에대한 계획이 있거나 어떠한 장치를 해야한다.
+
+bad case:
+```javascript
+try {
+  functionThatMightThrow();
+} catch (error) {
+  console.log(error);
+} 
+```
+good case:
+```javascript
+try {
+  functionThatMightThrow();
+} catch (error) {
+  // console.log 보다 더 알아채기 쉽다.
+  console.log(error);
+  // 유저에게 알리는 방법
+  notifyUserOfError(error);
+  // 서비스 자체에 에러를 기록하는 방법
+  reportErrorToService(error);
+  // else anything
+}
+```
+
+## Promise 가 실패된 것을 무시하지 말기
+단순히 에러확인만 하지 말기 와 같은 이유이다
+
+bad case
+```javascript
+getData()
+.then(data => {
+  functionThatMightThrow(data);
+})
+.catch(error => {
+  console.log(error);
+});
+```
+good case
+```javascript
+getData()
+.then(data => {
+  finctionThatMightThrow(data);
+})
+.catch(error => {
+  // console.log 보다 더 알아채기 쉽다.
+    console.log(error);
+    // 유저에게 알리는 방법
+    notifyUserOfError(error);
+    // 서비스 자체에 에러를 기록하는 방법
+    reportErrorToService(error);
+    // else anything
+})
+```
+
+# 포맷팅 Formatting
+포멧팅 체크를 자동으로 하주는 [많은 도구들](https://standardjs.com/rules.html)이 있다.
+개발자들끼리 포맷팅에 대해 논쟁하는 것 만큼 시간과 돈을 낭비하는 것이 없다.
+자동으로 서식을 교정해주는 것(들여쓰기, 탭이냐 스페이스냐, 작은따옴표냐 큰따옴표냐) 에 해당하지 않는 사항에 대해서는 몇가지 지침을 따르는 것이 좋다.
+
+## 일관된 대소문자를 사용하자
+bad case:
+```javascript
+const DAYS_IN_WEEK = 7;
+const dayInMonth = 30;
+
+const songs = ['Back In Black', 'Stairway to Heaven', 'Hey Jude'];
+const Aritists = ['ACDC', 'Led Zeppelin', 'The Beatles'];
+
+function eraseDatabase() {}
+function restore_database() {}
+
+class animal {}
+class Alpaca {}
+```
+
+good case
+```javascript
+const DAYS_IN_WEEK = 7;
+const DAYS_IN_MONTH = 30;
+
+const songs = ['Back In Black', 'Stairway to Heaven', 'Hey Jude'];
+const aritists = ['ACDC', 'Led Zeppelin', 'The Beatles'];
+
+function eraseDatabase() {}
+function restoreDatabase() {}
+
+class Animal {}
+class Alpaca {}
+```
+
+## 함수 호출자와 함수 피호출자는 가깝게 위치하기
+어떤 함수가 다른 함수를 호출하면 그 함수들은 소스 파일안에서 서로 수직으로 근접해 있어야 한다.
+이상적으로는 함수 호출자를 함수 피호출자 바로 위에 위치시켜야 한다. 
+코드를 읽을 때 신문을 읽듯 아래로 읽기 때문에 코드를 작성할 때도 읽을 떄를 고려하여 작성해야 한다.
+
+bad case
+```javascript
+class PerformanceReview {
+  constructor(employee) {
+    this.employee = employee;
+  }
+  lookupPeers() {
+    return db.lookup(this.employee, 'peers'); 
+  }
+  lookupManager() {
+    return db.lookup(this.employee, 'manager');
+  }
+  getPeerReviews() {
+    const peers = this.lookupPeers();
+    // ...
+  }
+  perfReview() {
+    this.getPerrReviews();
+    this.getManagerReviews();
+    this.getSelfReview();
+  }
+  getManagerReview() {
+    const manager = this.lookupManager();
+  }
+  getSelfReview() {
+    // ...
+  }
+}
+const reivew = new PerformanceReview(user);
+reivew.perfReview();
+```
+
+good case
+```javascript
+class PerformanceReveiw {
+  constructor(employee) {
+   this.employee = employee;
+  }
+  perfReview() {
+    this.getPeerReveiws();
+    this.getManagerReview();
+    this.getSelfReveiw();
+  }
+  getPeerReviews() {
+    const peers = this.lookupPeers();
+    // ...
+  }
+  lookupPeers() {
+    return db.lookup(this.employee, 'peers');
+  }
+  getManagerReview() {
+    const manager = this.lookupManager();
+  }
+  lookupManger() {
+    return db.lookup(this.employee, 'manager');
+  }
+}
+const review = new Performance(employee);
+reveiw.perfReview();
+```
+
+# 주석 Commnets 
+## 주석은 단지 그 로직이 복잡하다는 것을 말할 뿐이다.
+주석을 다는 것은 사과해야 할 일이며 필수적인 것이 아니다. 좋은 코드는 코드 자체로 말한다
+
+bad case
+```javascript
+function hashIt(data) {
+  // 이건 해쉬입니다.
+  let hash = 0;
+
+  // length 는 data 의 길이 입니다.
+  const length = data.length;
+
+  // 데이터의 문자열 개수만큼 반복문을 실행합니다.
+  for (let i = 0; i < length; i++) {
+    // 문자열 코드를 얻습니다.
+    const char = data.charCodeAt(i);
+    // 해쉬를 만든다.
+    hash = ((hash << 5) - hash) + char;
+    // 32 - bit 정수로 바꾼다.
+    hash &= hash;
+  }
+}
+```
+
+good case:
+```javascript
+function hashIt(data) {
+  let hash = 0;
+  const length = data.length;
+  
+  for (let i = 0; i < length; i++) {
+    const char = data.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash &= hash;
+  }
+}
+```
+
+## 주석으로 된 코드를 남기지 말기
+버전 관리 도구가 존재하기 때문에 코드를 주석으로 남길 이유가 없다.
+
+## 코드 기록을 주석으로 남기지 말기
+버전 관리 도구를 이용해야 하는 것을 꼭 기억하자. 죽은 코드도 불필요한 설명도 특히 코드의 기록에 대한 주석도 필요하지 않다.
+코드의 기록에 대해 보고 싶다면 git log를 사용하자.
+
+bad case: 
+```javascript
+/**
+ * 2016-12-20: 모나드 제거했음, 이해는 되지 않음 (RM)
+ * 2016-10-01: 모나드 쓰는 로직 개선 (JP)
+ * 2016-02-03: 타입체킹 하는부분 제거 (LI)
+ * 2015-03-14: 버그 수정 (JR)
+ */
+function combine(a, b) {
+  return a + b;
+}
+```
+good case:
+```javascript
+function combine(a, b) {
+  return a + b;
+}
+```
+
+## 코드의 위치를 설명하지 말자
+이건 정말 쓸데 없습니다. 적절한 들여쓰기와 포맷팅을하고
+함수와 변수의 이름에 의미를 부여하자
+
+bad case:
+```javascript
+////////////////////////////////////////////////////////////////////////////////
+// 스코프 모델 정의
+////////////////////////////////////////////////////////////////////////////////
+$scope.model = {
+  menu: 'foo',
+  nav: 'bar'
+};
+
+////////////////////////////////////////////////////////////////////////////////
+// actions 설정
+////////////////////////////////////////////////////////////////////////////////
+const actions = function() {
+  // ...
+};
+```
+
+good case:
+```javascript
+$scope.model = {
+  menu: 'foo',
+  nav: 'bar'
+};
+
+const actions = function() {
+  // ...
+};
+```
+
+
 
 Reference
 --
