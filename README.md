@@ -9,7 +9,7 @@ next: false
 
 Today I Learned
 --
-- [GitHub Pages](https://eyabc.github.io/TIL/)
+- [GitHub Pages](https://github.com/eyabc)
 
 
 # Posts
@@ -62,6 +62,7 @@ Tools
 * keyNote
 * git
     * [Git 사용 중 자주 만나는 이슈 정리](/development/Tools/Git/git.html)
+    * [깃 사용자가 가장 흔히 저지르는 6가지 실수와 대처 방법](/development/Tools/Git/MistakesGit6.html)
 * [sequal pro](/development/Tools/SequalPro.md)
 * pycharm community
 * [Ngnix](/development/Tools/Ngnix.md)

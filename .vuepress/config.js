@@ -1,31 +1,30 @@
-module.exports = {
-    title: "EYABC",
-    description: "Today I Learned",
-    markdown: {
-        extendMarkdown: md => {
-            md.use(require('markdown-it-plantuml'))
-        }
-    },
-    themeConfig: {
-        nav: [
-            { text: 'Todo', link: '/Todo/' },
-            { text: 'List', link: '/' },
-            { text: 'About', link: '/about/' },
-            {
-                text: 'Development',
-                items: [
-                    { text: 'JavaScript', link: '/development/JavaScript/index'},
-                    { text: 'React', link: '/development/react/index'},
-                    { text: 'Vue', link: '/development/vue/makeVueBlog'},
-                    { text: 'Tools', link: '/development/Tools/index'},
-                    { text: 'Style', link: '/development/Style/index'},
-                    { text: 'Term', link: '/development/Term/index'}
-                ]
-            }
-        ],
-        sidebar: 'auto',
-        smoothScroll: true
+const sidebar = require('./sidebar');
 
-    },
-    base: '/TIL/'
+module.exports = {
+	title: "EYABC",
+	description: "Today I Learned",
+	themeConfig: {
+		nav: [
+			{ text: 'Home', link: '/' },
+			{ text: 'Repository', link: 'https://github.com/eyabc/TIL/' },
+		],
+		sidebar,
+		smoothScroll: true
+	},
+	base: '/TIL/',
+	markdown: {
+		extendMarkdown: md => {
+			md.use(require('markdown-it-plantuml'))
+			// md.use(require('markdown-it-underline'))
+			// md.use(require('markdown-it-task-lists'))
+		}
+	},
+	plugins: [
+		['@vuepress/pwa', { serviveWorker: true, updatePopup: true }],
+		['feed', { canonical_base: 'https://eyabc.github.io/TIL/' }],
+		'@vuepress/google-analytics',
+		{
+			'ga': 'UA-113171398-2'
+		}
+	]
 };

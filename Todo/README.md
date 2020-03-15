@@ -5,3 +5,7 @@ This Week
 * 프로젝트 자문 구하기 
 * 적금 문의
 * Vanila JS 로 웹 사이트 만들어 보기  
+
+
+---
+* blog refectoring
