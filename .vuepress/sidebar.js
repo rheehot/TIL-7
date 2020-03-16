@@ -1,3 +1,109 @@
+const DEVELOPMENT = '/development';
+const CSS = `${ DEVELOPMENT }/CSS`;
+const TERM = `${ DEVELOPMENT }/Term`;
+const TOOLS = `${ DEVELOPMENT }/Tools`;
+const DESIGN_PATTERN = `${ DEVELOPMENT }/DesignPattern`;
+const JAVASCRIPT = `${ DEVELOPMENT }/JavaScript`;
+const REACT = `${ DEVELOPMENT }/React`;
+
+const REACT_REAL_PROGRAMMING = `${ REACT }/실전리액트프로그래밍`;
+const REACT_I18NEXT = `${ REACT }/i18next`;
+const REACT_ETC = `${ REACT }/etc`;
+
+const TOOLS_GIT = `${TOOLS}/Git`;
+
 module.exports = [
-	{ title: 'Home', path: '/'}
+	{ title: 'Home', path: '/' },
+	{
+		title: 'JavaScript',
+		children: [
+			{ title: '알아야 할 13가지 유용한 Javascript 배열 방법과 트릭', path: `${ JAVASCRIPT }/JavascriptArray` },
+			{ title: 'clean-code-javascript', path: `${ JAVASCRIPT }/CleanCodeJavascript` },
+			{ title: 'Object.assign()', path: `${ JAVASCRIPT }/ObjectAssign` },
+		]
+	},
+	{
+		title: 'React',
+		children: [
+			{
+				title: '실전 리액트 프로그래밍',
+				children: [
+					{ title: '1장 리액트 프로젝트 시작하기', path: `${ REACT_REAL_PROGRAMMING }/1` },
+					{ title: '2장 ES6', path: `${ REACT_REAL_PROGRAMMING }/2` },
+					{ title: '3장 리액트 개념', path: `${ REACT_REAL_PROGRAMMING }/3` },
+					{ title: '1장 리액트 8장 서버사이드렌더링 & Next.js', path: `${ REACT_REAL_PROGRAMMING }/8` }
+				]
+			},
+			{
+				title: 'i18next',
+				children: [
+					{ title: 'ConfigureOptions', path: `${ REACT_I18NEXT }/ConfigureOptions` },
+					{ title: 'interpolation', path: `${ REACT_I18NEXT }/interpolation` },
+				]
+			},
+			{
+				title: 'ETC',
+				children: [
+					{title: 'Restrict Router', path: `${REACT_ETC}/RestrictRouter`},
+					{title: 'locale 언어', path: `${REACT_ETC}/locale`},
+					{title: 'Dotenv', path: `${REACT_ETC}/Dotenv`},
+					{title: 'function component와 class component', path: `${REACT_ETC}/FunctionClassComponent`},
+				]
+			}
+		]
+	},
+	{
+		title: 'CSS',
+		children: [
+			{ title: 'CSS background-image 의 안티 패턴', path: `${CSS}/backgroundImage`}
+		]
+	},
+	{
+		title: 'TERM',
+		children: [
+			{ title: 'AJAX', path: `${TERM}/AJAX`},
+			{ title: 'XHR', path: `${TERM}/XHR`},
+			{ title: '순수함수 Pure Component', path: `${TERM}/PureComponent`},
+			{ title: 'Zero-dependency Module', path: `${TERM}/ZeroDependencyModule`},
+			{ title: '명령형 프로그래밍과 함수형 프로그래밍', path: `${TERM}/JavascriptFunctionalProgramming`}
+		]
+	},
+	{
+		title: 'Tools',
+		children: [
+			{ title: '개발환경', path: `${TOOLS}/Environment`},
+			{ title: 'Markdown', path: `${TOOLS}/Markdown`},
+			{ title: 'iterm2 세팅하기', path: `${TOOLS}/Iterm2Setting`},
+			{ title: 'node.js 설치하기', path: `${TOOLS}/NodeJS`},
+			{ title: 'yarn 설치하기', path: `${TOOLS}/yarn`},
+			{ title: '웹스톰', path: ``},
+			{ title: 'vsCode', path: ``},
+			{
+				title: 'Git',
+				children: [
+					{title: 'Git 사용 중 자주 만나는 이슈 정리', path: `${TOOLS_GIT}/git`},
+					{title: '깃 사용자가 가장 흔히 저지르는 6가지 실수와 대처 방법', path: `${TOOLS_GIT}/MistakesGit6`},
+				]
+			},
+			{ title: 'Ngnix', path: `${TOOLS}/Ngnix`},
+			{ title: 'https', path: `${TOOLS}/https`},
+			{ title: '인증서 mkcert', path: ``},
+			{ title: 'POSTMAN', path: ``},
+			{ title: 'api-docs spec document', path: ''},
+			{ title: 'Mac Terminal Command', path: `${TOOLS}/MacTerminalCommand`},
+			{ title: '메신저 서비스들의 메시지 관리방식', path: `${TOOLS}/ChattingService`},
+		]
+	},
+	{
+		title: 'Design Patterns',
+		children: [
+			{ title: '상속과 조합', path: `${DESIGN_PATTERN}/CompositionAndInheritance`}
+		]
+	},
+	{
+		title: 'ETC',
+		children: [
+		]
+	}
 ];
+

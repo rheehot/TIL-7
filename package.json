@@ -9,6 +9,7 @@
   "scripts": {
     "docs:dev": "vuepress dev",
     "docs:build": "vuepress build",
+    "docs:eject": "vuepress eject",
     "docs:deploy": "sh deploy.sh"
   },
   "dependencies": {

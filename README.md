@@ -36,9 +36,9 @@ React
 * [Dotenv](/development/react/etc/Dotenv.md)
 * [function component와 class component](/development/react/etc/FunctionClassComponent.md)
 
-Style
+CSS
 --
-* [CSS background-image 의 안티 패턴](/development/Style/backgroundImage.md)
+* [CSS background-image 의 안티 패턴](/development/CSS/backgroundImage.md)
 
 Term
 --
