@@ -1,0 +1,9 @@
+http://www.yes24.com/Product/goods/18249021?scode=029
+https://github.com/Integerous/tdd-practice-in-java
+https://www.notion.so/desktop
+http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&mallGb=KOR&barcode=9788979146639&orderClick=LEA&Kc=
+https://github.com/Integerous/goQuality-dev-contents
+https://github.com/JaeYeopHan/Interview_Question_for_Beginner
+https://github.com/WeareSoft/tech-interview
+https://github.com/jojoldu/junior-recruit-scheduler
+https://zuminternet.github.io/ZUM-Pilot-provide-video/

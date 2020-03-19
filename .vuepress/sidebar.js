@@ -8,6 +8,7 @@ const REACT = `${ DEVELOPMENT }/React`;
 const INTERVIEW = `${ DEVELOPMENT}/Interview`;
 const STUDY_MONEY = `${DEVELOPMENT}/StudyMoneyProject`;
 const REACT_NATIVE = `${DEVELOPMENT}/ReactNative`;
+const SQL = `${DEVELOPMENT}/SQL`;
 
 const REACT_REAL_PROGRAMMING = `${ REACT }/실전리액트프로그래밍`;
 const REACT_I18NEXT = `${ REACT }/i18next`;
@@ -138,6 +139,13 @@ module.exports = [
 		children: [
 			{ title: '우아한 형제들', path: `${REACT_NATIVE}/우아한형제들`},
 			{ title: 'React Native 시작전 고려사항', path: `${REACT_NATIVE}/ReactNative_시작전_고려사항`},
+		]
+	},
+	{
+		title: 'SQL',
+		children: [
+			{ title: 'SQL Cheat Sheet', path: `${SQL}/SQL_Cheat_Sheet`},
+			{ title: 'Pomodoro 기법', path: `${SQL}/Pomodoro기법`},
 		]
 	}
 ];
