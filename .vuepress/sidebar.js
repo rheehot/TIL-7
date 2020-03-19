@@ -131,7 +131,8 @@ module.exports = [
 	{
 		title: 'Study Money Project',
 		children: [
-			{ title: 'Intro', path: `${STUDY_MONEY}/Intro`}
+			{ title: 'Intro', path: `${STUDY_MONEY}/Intro`},
+			{ title: 'Pomodoro 기법', path: `${STUDY_MONEY}/Pomodoro기법`},
 		]
 	},
 	{
@@ -145,7 +146,6 @@ module.exports = [
 		title: 'SQL',
 		children: [
 			{ title: 'SQL Cheat Sheet', path: `${SQL}/SQL_Cheat_Sheet`},
-			{ title: 'Pomodoro 기법', path: `${SQL}/Pomodoro기법`},
 		]
 	}
 ];
