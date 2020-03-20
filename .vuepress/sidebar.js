@@ -5,10 +5,12 @@ const TOOLS = `${ DEVELOPMENT }/Tools`;
 const DESIGN_PATTERN = `${ DEVELOPMENT }/DesignPattern`;
 const JAVASCRIPT = `${ DEVELOPMENT }/JavaScript`;
 const REACT = `${ DEVELOPMENT }/React`;
-const INTERVIEW = `${ DEVELOPMENT}/Interview`;
-const STUDY_MONEY = `${DEVELOPMENT}/StudyMoneyProject`;
-const REACT_NATIVE = `${DEVELOPMENT}/ReactNative`;
-const SQL = `${DEVELOPMENT}/SQL`;
+const INTERVIEW = `${ DEVELOPMENT }/Interview`;
+const STUDY_MONEY = `${ DEVELOPMENT }/StudyMoneyProject`;
+const REACT_NATIVE = `${ DEVELOPMENT }/ReactNative`;
+const SQL = `${ DEVELOPMENT }/SQL`;
+const JAVA = `${ DEVELOPMENT }/Java`;
+
 
 const REACT_REAL_PROGRAMMING = `${ REACT }/실전리액트프로그래밍`;
 const REACT_I18NEXT = `${ REACT }/i18next`;
@@ -16,7 +18,7 @@ const REACT_ETC = `${ REACT }/etc`;
 
 const TOOLS_GIT = `${ TOOLS }/Git`;
 
-const INTERVEIW_개발상식 = `${INTERVIEW}/개발상식`;
+const INTERVEIW_개발상식 = `${ INTERVIEW }/개발상식`;
 
 module.exports = [
 	{ title: 'Home', path: '/' },
@@ -112,8 +114,8 @@ module.exports = [
 			{
 				title: '개발상식',
 				children: [
-					{ title: '객체지향 프로그래밍', path: `${INTERVEIW_개발상식}/객체지향프로그래밍`},
-					{ title: 'RESTful API', path: `${INTERVEIW_개발상식}/RESTfulAPI`}
+					{ title: '객체지향 프로그래밍', path: `${ INTERVEIW_개발상식 }/객체지향프로그래밍` },
+					{ title: 'RESTful API', path: `${ INTERVEIW_개발상식 }/RESTfulAPI` }
 				]
 			},
 			{ title: '네트워크', path: `` },
@@ -131,22 +133,29 @@ module.exports = [
 	{
 		title: 'Study Money Project',
 		children: [
-			{ title: 'Intro', path: `${STUDY_MONEY}/Intro`},
-			{ title: 'Pomodoro 기법', path: `${STUDY_MONEY}/Pomodoro기법`},
+			{ title: 'Intro', path: `${ STUDY_MONEY }/Intro` },
+			{ title: 'Pomodoro 기법', path: `${ STUDY_MONEY }/Pomodoro기법` },
 		]
 	},
 	{
 		title: 'React Native',
 		children: [
-			{ title: '우아한 형제들', path: `${REACT_NATIVE}/우아한형제들`},
-			{ title: 'React Native 시작전 고려사항', path: `${REACT_NATIVE}/ReactNative_시작전_고려사항`},
+			{ title: '우아한 형제들', path: `${ REACT_NATIVE }/우아한형제들` },
+			{ title: 'React Native 시작전 고려사항', path: `${ REACT_NATIVE }/ReactNative_시작전_고려사항` },
 		]
 	},
 	{
 		title: 'SQL',
 		children: [
-			{ title: 'SQL Cheat Sheet', path: `${SQL}/SQL_Cheat_Sheet`},
+			{ title: 'SQL Cheat Sheet', path: `${ SQL }/SQL_Cheat_Sheet` },
 		]
+	},
+	{
+		title: 'Java',
+		children: [
+			{ title: 'Mac에 Java 여러 버전 설치 & 사용하기', path: `${ JAVA }/Mac_Java_여러버전설치` }
+		]
+
 	}
 ];
 

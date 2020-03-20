@@ -2,7 +2,7 @@
 - 이름 : 박은영
 - 이메일 : bey4314@naver.com
 - 경력 
-    * textory 웹개발자 재직중 since 2019.10 ~
+    * textory 웹개발자 재직중 since 2019.10 ~ 2020.03
         * 서비스
             * 알린다
             * 텍스토리
@@ -17,3 +17,7 @@
     * Vue, Node, GoogleMaps, Socket.io
 * 2018 [커뮤니티 융합 채팅 시스템](https://github.com/eyabc/CEO)
     * CEO Team 서비스 플랫폼 설계
+    
+# 회고
+* 2020
+    인문에 관심을 가지게 되다.
