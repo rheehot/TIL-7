@@ -154,7 +154,7 @@ module.exports = [
 	{
 		title: 'Java',
 		children: [
-			{ title: 'Mac에 Java 여러 버전 설치 & 사용하기', path: `${ JAVA }/Mac_Java_여러버전설치` }
+			// { title: 'Mac에 Java 여러 버전 설치 & 사용하기', path: `${ JAVA }/Mac_Java_여러버전설치` }
 		]
 	},
 	{
