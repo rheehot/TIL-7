@@ -151,16 +151,16 @@ module.exports = [
 			{ title: 'SQL Cheat Sheet', path: `${ SQL }/SQL_Cheat_Sheet` },
 		]
 	},
-	// {
-	// 	title: 'Java',
-	// 	children: [
-			// { title: 'Mac에 Java 여러 버전 설치 & 사용하기', path: `${ JAVA }/Mac_Java_여러버전설치` }
-		// ]
-	// },
+	{
+		title: 'Java',
+		children: [
+			{ title: 'Mac에 Java 여러 버전 설치 & 사용하기', path: `${ JAVA }/Mac_Java_여러버전설치` }
+		]
+	},
 	{
 		title: 'Algorithm',
 		children: [
-			{ title: '프로그래머스 문제 모음', path: `${ALGORITHM}`}
+			{ title: '프로그래머스 문제 모음', path: `${ALGORITHM}/JavaScript`}
 		]
 	}
 ];
