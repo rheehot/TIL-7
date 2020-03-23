@@ -37,3 +37,35 @@
         } , {})).reduce((a,b)=> a*(b+1), 1)-1;    
     }
     ```
+  
+## 스택/큐
+* [쇠막대기](https://velog.io/@kimtaeeeny/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EC%87%A0%EB%A7%89%EB%8C%80%EA%B8%B0-javascript)
+    * '(' 을 push, ')'은 pop
+    * ')'이 pop 될 때, 레이저인지 막대기인지 파악한다.
+    * 레이저인 경우 '(' : 스택의 길이 =(현재까지 쌓인 막대길이)를 add 하고, 막대기 끝인 경우 ')' 1 을 add 한다.
+    * avg: 4s
+        ```javascript
+        function solution(arrangement) {
+            let answer = 0;
+            const stack = [];
+            for(let i = 0; i<arrangement.length; i++) {
+                if(arrangement[i] === '(') {
+                    stack.push('(');
+                } else {
+                    stack.pop();
+                    if (arrangement[i-1] === '(') {
+                        answer += stack.length;
+                    }
+                    else {
+                        answer += 1
+                    }
+                }
+            }
+            return answer;
+        }
+        ```
+  * string 을 배열로 바꿈: avg 12s
+    ```
+        const arg = arrangement.split('');
+    
+    ```
