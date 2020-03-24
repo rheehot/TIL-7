@@ -149,6 +149,7 @@ module.exports = [
 		title: 'SQL',
 		children: [
 			{ title: 'SQL Cheat Sheet', path: `${ SQL }/SQL_Cheat_Sheet` },
+			{title: 'Managing Hierarchical Data in MySQL', path: `${SQL}/ManagingHierarchicalData_in_MySQL`}
 		]
 	},
 	{

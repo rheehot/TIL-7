@@ -40,7 +40,7 @@ $ nginx -s reload
 
 ## ngnix.conf
 * 인증서를 발급받는다.(raks) 
-* ngix.conf 파일을 받는다. (raks)
+* ngnix.conf 파일을 받는다. (raks)
     * /Users/"computerName"/...
         * computerName 부분을 수정한다. 
 
