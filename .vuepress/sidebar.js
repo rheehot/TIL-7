@@ -12,6 +12,7 @@ const SQL = `${ DEVELOPMENT }/SQL`;
 const JAVA = `${ DEVELOPMENT }/Java`;
 const ALGORITHM = `${ DEVELOPMENT }/Algorithm`;
 const VUE = `${ DEVELOPMENT }/Vue`;
+const BOOK = `${ DEVELOPMENT }/Book`;
 
 
 const REACT_REAL_PROGRAMMING = `${ REACT }/실전리액트프로그래밍`;
@@ -173,6 +174,17 @@ module.exports = [
 				children: [
 					{ title: 'Intro', path: `${VUE}/Typescript_with_Vue_실전프로젝트/Intro`},
 					{ title: 'Class based Component', path: `${VUE}/Typescript_with_Vue_실전프로젝트/Class-based_Component`},
+				]
+			}
+		]
+	},
+	{
+		title: 'Book',
+		children: [
+			{
+				title: '밑바닥부터 만드는 컴퓨팅 시스템',
+				children: [
+					{ title: '1_불논리', path: `${Book}/밑마닥부터 만드는 컴퓨팅 시스템/1_불논리`}
 				]
 			}
 		]
