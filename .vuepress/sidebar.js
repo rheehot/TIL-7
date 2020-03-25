@@ -11,6 +11,7 @@ const REACT_NATIVE = `${ DEVELOPMENT }/ReactNative`;
 const SQL = `${ DEVELOPMENT }/SQL`;
 const JAVA = `${ DEVELOPMENT }/Java`;
 const ALGORITHM = `${ DEVELOPMENT }/Algorithm`;
+const VUE = `${ DEVELOPMENT }/Vue`;
 
 
 const REACT_REAL_PROGRAMMING = `${ REACT }/실전리액트프로그래밍`;
@@ -162,6 +163,18 @@ module.exports = [
 		title: 'Algorithm',
 		children: [
 			{ title: '프로그래머스 문제 모음', path: `${ALGORITHM}/JavaScript`}
+		]
+	},
+	{
+		title: 'Vue',
+		children: [
+			{
+				title: 'Typescript with Vue 실전 프로젝트',
+				children: [
+					{ title: 'Intro', path: `${VUE}/Typescript_with_Vue_실전프로젝트/Intro`},
+					{ title: 'Class based Component', path: `${VUE}/Typescript_with_Vue_실전프로젝트/Class-based_Component`},
+				]
+			}
 		]
 	}
 ];

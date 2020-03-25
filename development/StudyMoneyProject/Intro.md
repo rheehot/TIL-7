@@ -32,7 +32,7 @@ Study Money Project : 공부와 돈 : 돈의노예에 탈출하기 위한 어플
     
 ## 기술 스택
 * 줌인터넷에 들어가고 싶다. 줌 인터넷 파일럿 프로젝트에서 쓰인 기술스택을 참고한다.
-* typeScript 
+* [typeScript](https://medium.com/@jtomaszewski/why-typescript-is-the-best-way-to-write-front-end-in-2019-feb855f9b164) 
 1. front: Vue.js 사용하여 스마트폰에서 이용할 것이다 웹뷰.********
 2. back: SpringBoot/Gradle/Java8
 3. DB: MySQL(oAuth 회원 정보 저장) / Mongo(통장정보, 공부시간정보)
