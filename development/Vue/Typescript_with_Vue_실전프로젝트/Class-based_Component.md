@@ -178,4 +178,56 @@ export default class Home extends Vue {
     ```
 
 
-## @Model 
+## @Model Property Decorator
+* JS
+```javascript
+export default {
+    model: {
+        prop: 'checked',
+        event: 'change'
+    },
+    props: {
+        checked: {
+            type: Boolean
+        }
+    }
+}
+```
+* TS
+```typescript
+@Component
+export default class YourComponent extends Vue {
+    @Model('change', { type: Boolean }) readonly checked!: boolean 
+}
+```
+
+## Mixins 믹스인
+Vue 컴포넌트에 재사용 가능한 기능을 배포하는 유연한 방법이다.
+```typescript
+import {Vue, Component, Mixins} from 'vue-property-decorator';
+import toggle from './toggle.vue';
+
+@Component({
+    components: {
+        toggle
+    }
+})
+// 최대 5개까지 Mixins(다중상속) 가능하다.
+// 사용하는 컴포넌트와 상속 받는 컴포넌트의 이름이 같다면 현재 컴포넌트가 오버라이드 된다.
+export default class Dropdown extends Mixins(toggle) {
+}
+```
+
+```typescript
+<script lang="ts">
+    import { Vue, Component } from 'vue-property-decorator';
+
+    @Component
+    export default class Toggle extends Vue {
+        public show: boolean = false;
+        public toggle() {
+            this.show = !this.show;
+        }
+    }
+</script>
+```
