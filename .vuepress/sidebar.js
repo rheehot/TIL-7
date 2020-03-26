@@ -174,6 +174,7 @@ module.exports = [
 				children: [
 					{ title: 'Intro', path: `${VUE}/Typescript_with_Vue_실전프로젝트/Intro`},
 					{ title: 'Class based Component', path: `${VUE}/Typescript_with_Vue_실전프로젝트/Class-based_Component`},
+					{ title: 'Interface 로 Vuex 설계하기', path: `${VUE}/Typescript_with_Vue_실전프로젝트/Interface 로 Vuex 설계하기`},
 				]
 			}
 		]
