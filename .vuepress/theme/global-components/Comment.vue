@@ -4,28 +4,28 @@
     </div>
 </template>
 <script>
-	export default {
-		watch: {
-			'$route.path': function () {
-				this.$el.innerHTML = '<div id="comment"></div>';
-				this.init();
-			}
-		},
-		methods: {
-			init() {
-				const utterances = document.createElement('script');
-				utterances.setAttribute('issue-term', 'pathname');
-				utterances.setAttribute('theme', 'github-light');
-				utterances.setAttribute('repo', `eyabc/blog-comment`);
-				utterances.type = 'text/javascript';
-				utterances.async = true;
-				utterances.crossorigin = 'anonymous';
-				utterances.src = 'https://utteranc.es/client.js';
-				window.document.getElementById('comment').appendChild(utterances);
-			}
-		},
-		mounted() {
-			this.init();
-		}
-	}
+    export default {
+        watch: {
+            '$route.path': function () {
+                this.$el.innerHTML = '<div id="comment"></div>';
+                this.init();
+            }
+        },
+        methods: {
+            init() {
+                const utterances = document.createElement('script');
+                utterances.setAttribute('issue-term', 'pathname');
+                utterances.setAttribute('theme', 'github-light');
+                utterances.setAttribute('repo', `eyabc/blog-comment`);
+                utterances.type = 'text/javascript';
+                utterances.async = true;
+                utterances.crossorigin = 'anonymous';
+                utterances.src = 'https://utteranc.es/client.js';
+                window.document.getElementById('comment').appendChild(utterances);
+            }
+        },
+        mounted() {
+            this.init();
+        }
+    }
 </script>
