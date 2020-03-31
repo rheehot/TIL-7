@@ -55,10 +55,10 @@
             & > li:not(:first-child)
                 margin-top .75rem
 
-    @media (max-width: $MQMobile)
+    @media (max-width: 1199px)
         .sidebar
             .nav-links
-                display block
+                display none
 
                 .dropdown-wrapper .nav-dropdown .dropdown-item a.router-link-active::after
                     top calc(1rem - 2px)

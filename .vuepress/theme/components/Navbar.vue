@@ -123,7 +123,7 @@
                 flex: 0 0 auto
                 vertical-align top
 
-    @media (max-width: $MQMobile)
+    @media (max-width: 1199px)
         .navbar
             padding-left 4rem
 
