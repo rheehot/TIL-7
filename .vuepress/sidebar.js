@@ -13,6 +13,7 @@ const JAVA = `${DEVELOPMENT}/Java`;
 const ALGORITHM = `${DEVELOPMENT}/Algorithm`;
 const VUE = `${DEVELOPMENT}/Vue`;
 const BOOK = `${DEVELOPMENT}/Book`;
+const YOUTUBECLONE = `${DEVELOPMENT}/YouTubeClone`;
 
 
 const REACT_REAL_PROGRAMMING = `${REACT}/실전리액트프로그래밍`;
@@ -31,6 +32,7 @@ module.exports = [
             {title: '알아야 할 13가지 유용한 Javascript 배열 방법과 트릭', path: `${JAVASCRIPT}/JavascriptArray`},
             {title: 'clean-code-javascript', path: `${JAVASCRIPT}/CleanCodeJavascript`},
             {title: 'Object.assign()', path: `${JAVASCRIPT}/ObjectAssign`},
+            {title: 'package-lock.json', path: `${JAVASCRIPT}/package-lock.json.md`},
         ]
     },
     {
@@ -189,6 +191,23 @@ module.exports = [
                 children: [
                     // {title: '1_불논리', path: `${BOOK}/밑마닥부터 만드는 컴퓨팅 시스템/1_불논리`}
                 ]
+            }
+        ]
+    },
+    {
+        title: '유튜브 클론 코딩',
+        children: [
+            {
+                title: 'Intro',
+                path: `${YOUTUBECLONE}/Intro`
+            },
+            {
+                title: 'NodeJS Theory',
+                path: `${YOUTUBECLONE}/NodeJS Theory`
+            },
+            {
+                title: 'ExpressJS',
+                path: `${YOUTUBECLONE}/ExpressJS.md`
             }
         ]
     }
